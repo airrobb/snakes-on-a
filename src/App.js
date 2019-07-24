@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   display: grid;
   align-content: center;
   justify-content: center;
-  grid-gap: 3rem;
+  grid-gap: 6vmin;
 `;
 
 const Image = styled.div`
@@ -51,15 +51,22 @@ const Row = styled.div`
 `;
 
 const Button = styled.button`
-  width: 15rem;
+  width: 20rem;
   text-transform: uppercase;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   line-height: 3rem;
   border: 2px solid black;
+  background-color: white;
 
   &:active,
   &:focus {
     outline: none;
+  }
+
+  @media (max-width: 500px) {
+    font-size: 4vw;
+    line-height: 10vw;
+    width: 80vw;
   }
 `;
 
@@ -122,7 +129,7 @@ function App() {
               />
             </Row>
             <Row>
-              <Button onClick={getNewSnake}>Snakes</Button>
+              <Button onClick={getNewSnake}>Mother Fucking Snakes</Button>
             </Row>
           </React.Fragment>
         )}
