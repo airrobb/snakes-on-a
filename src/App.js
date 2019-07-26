@@ -144,6 +144,7 @@ const Button = styled.button`
   font-weight: bold;
   line-height: 3rem;
   border: 2px solid black;
+  background-color: white;
   rtransition: 0.3s all;
 
   &:hover {
