@@ -24,7 +24,17 @@ const GlobalStyle = createGlobalStyle`
 
 const Loader = styled.img`
   width: 30vmin;
+  opacity: ${({ transition }) => (transition ? "1" : "0")}
+  transition: all 0.5s;
 `;
+
+function Delay() {
+  const [transition, setTransition] = useState(false);
+  useEffect(() => {
+    setTimeout(() => setTransition(true), 500);
+  }, []);
+  return <Loader transition={transition} />;
+}
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -219,7 +229,7 @@ function App() {
             </Row>
           </React.Fragment>
         ) : (
-          <Loader src={LoaderImage} />
+          <Delay />
         )}
       </Wrapper>
       <audio src={Hiss} ref={audioRef} />
