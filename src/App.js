@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 
+import LoaderImage from "./assets/images/cursor-snake.png";
 import CursorImage from "./assets/images/cursor-snake2.png";
 import Hiss from "./assets/audio/hissing.mp3";
+import Slither from "./assets/images/slither.svg";
 
 import contentfulClient from "./contentful";
 
 const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
+    font-family: Impact;
     cursor: url(${CursorImage}), auto;
 
   }
@@ -19,28 +22,101 @@ const GlobalStyle = createGlobalStyle`
   } 
 `;
 
+const Loader = styled.img`
+  width: 30vmin;
+`;
+
 const Wrapper = styled.div`
   height: 100vh;
   width: 100vw;
   display: grid;
   align-content: center;
   justify-content: center;
-  grid-gap: 6vmin;
+  grid-gap: 8vmin;
 `;
 
+const insetFade = () => {
+  const fade = [];
+
+  for (let i = 0; i < 15; i += 1) {
+    fade.push(`inset -${i / 2}px -${i / 2}px ${5 * i}px white`);
+  }
+  return `box-shadow: ${fade.join(", ")};`;
+};
+
 const Image = styled.div`
-  width: 40vw;
-  height: 40vw;
+  width: 100%;
+  height: 100%;
   background-image: url(${({ src }) => src});
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
   display: inline-block;
-  border: 2px solid black;
+  ${insetFade}
+`;
+
+const POSITIONS = {
+  top: `
+    top: 1vmin;
+    left: -1vmin;
+    transform: translate(30.5vmin, -30.5vmin) rotate(90deg);
+
+    @media (max-width: 767px) {
+      height: 80vmin;
+      top: -1vmin;
+      transform: translate(41vmin, -41vmin) rotate(90deg);
+    }
+  `,
+  bottom: `
+    top: 2vmin;
+    left: -1vmin;
+    transform: translate(30.5vmin, 30vmin) rotate(90deg);
+
+    @media (max-width: 767px) {
+      height: 80vmin;
+      top: 2vmin;
+      transform: translate(41vmin, 40vmin)  rotate(90deg);
+    }
+  `,
+  left: `
+    top: 1vmin;
+    left: -1vmin;
+    @media (max-width: 767px) {
+      left: -3vmin;
+      height: 80vmin;
+    }
+  `,
+  right: `
+    top: 1vmin;
+    left: -1vmin;
+    transform: translateX(61vmin);
+
+    @media (max-width: 767px) {
+      height: 80vmin;
+      transform: translateX(82vmin);
+    }
+  `
+};
+
+const getPosition = ({ position }) => POSITIONS[position];
+
+const Slitherer = styled.div`
+  width: 10px;
+  height: 95%;
+  background-image: url(${Slither});
+  background-repeat: repeat-y;
+  position: absolute;
+  ${getPosition}
+`;
+
+const Container = styled.div`
+  position: relative;
+  width: 60vmin;
+  height: 60vmin;
 
   @media (max-width: 767px) {
-    width: 80vw;
-    height: 70vw;
+    width: 80vmin;
+    height: 80vmin;
   }
 `;
 
@@ -54,9 +130,15 @@ const Button = styled.button`
   width: 20rem;
   text-transform: uppercase;
   font-size: 1.3rem;
+  font-style: italic;
+  font-weight: bold;
   line-height: 3rem;
   border: 2px solid black;
-  background-color: white;
+  transition: 0.3s all;
+
+  &:hover {
+    transform: scale(1.03);
+  }
 
   &:active,
   &:focus {
@@ -64,9 +146,9 @@ const Button = styled.button`
   }
 
   @media (max-width: 500px) {
-    font-size: 4vw;
-    line-height: 10vw;
-    width: 80vw;
+    font-size: 4vmin;
+    line-height: 10vmin;
+    width: 80vmin;
   }
 `;
 
@@ -119,19 +201,25 @@ function App() {
     <React.Fragment>
       <GlobalStyle />
       <Wrapper>
-        {snakes[activeSnake] && (
+        {snakes[activeSnake] ? (
           <React.Fragment>
-            <Row>
+            <Container>
+              {Object.keys(POSITIONS).map(position => {
+                return <Slitherer position={position} key={position} />;
+              })}
+
               <Image
                 src={snakes[activeSnake].url}
                 alt={snakes[activeSnake].flavorText}
                 title={snakes[activeSnake].flavorText}
               />
-            </Row>
+            </Container>
             <Row>
-              <Button onClick={getNewSnake}>Mother Fucking Snakes</Button>
+              <Button onClick={getNewSnake}>More Mother Fuckin' Snakes</Button>
             </Row>
           </React.Fragment>
+        ) : (
+          <Loader src={LoaderImage} />
         )}
       </Wrapper>
       <audio src={Hiss} ref={audioRef} />
