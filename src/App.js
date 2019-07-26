@@ -49,7 +49,7 @@ const insetFade = () => {
   const fade = [];
 
   for (let i = 0; i < 15; i += 1) {
-    fade.push(`inset -${i / 2}px -${i / 2}px ${5 * i}px white`);
+    fade.push(`inset -${i / 4}vmin -${i / 4}vmin ${0.5 * i}vmin white`);
   }
   return `box-shadow: ${fade.join(", ")};`;
 };
@@ -138,6 +138,7 @@ const Row = styled.div`
 
 const Button = styled.button`
   width: 20rem;
+  background-color: white;
   text-transform: uppercase;
   font-size: 1.3rem;
   font-style: italic;
