@@ -144,8 +144,7 @@ const Button = styled.button`
   font-weight: bold;
   line-height: 3rem;
   border: 2px solid black;
-  background-white;
-  transition: 0.3s all;
+  rtransition: 0.3s all;
 
   &:hover {
     transform: scale(1.03);
@@ -232,7 +231,7 @@ function App() {
               />
             </Container>
             <Row>
-              <Button onClick={getNewSnake}>More Mother Fuckin' Snakes</Button>
+              <Button onClick={getNewSnake}>More Motherfuckin' Snakes</Button>
             </Row>
           </React.Fragment>
         ) : (
