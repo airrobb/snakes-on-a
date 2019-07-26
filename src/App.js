@@ -11,7 +11,7 @@ import contentfulClient from "./contentful";
 const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
-    font-family: Impact;
+    font-family:'Oswald', sans-serif;
     cursor: url(${CursorImage}), auto;
 
   }
@@ -137,14 +137,14 @@ const Row = styled.div`
 `;
 
 const Button = styled.button`
-  width: 20rem;
-  background-color: white;
+  padding: 0.5rem 1rem;
   text-transform: uppercase;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-style: italic;
   font-weight: bold;
   line-height: 3rem;
   border: 2px solid black;
+  background-white;
   transition: 0.3s all;
 
   &:hover {
@@ -161,6 +161,12 @@ const Button = styled.button`
     line-height: 10vmin;
     width: 80vmin;
   }
+`;
+
+const Gradient = styled.span`
+  background: -webkit-linear-gradient(#f39e24, #c52107);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `;
 
 const generateRandom = (max, current) => {
